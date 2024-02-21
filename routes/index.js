@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/',function(req,res){
  res.send("connected")
- MongoClient.connect(url,function(err,client,next){
+ MongoClient.connect(url,function(err,client){
   if(err) throw err;
   // assert.equal(null,err);
   const db = client.db("tododb");
