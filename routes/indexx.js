@@ -1,8 +1,7 @@
 var express = require("express");
 var router = express.Router();
 
-var mongodb = require("mongodb").MongoClient;
-var mongod = new mongodb("mongodb://localhost:27017");
+var database = require("../database");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -10,16 +9,20 @@ router.get("/", function (req, res, next) {
 });
 
 router.post("/", (req, res) => {
-  mongod.connect().then((dbase) => {
-    var database = dbase.db("TodoDB1");
-    database
+  var datas = {
+    todo: req.body.todo
+  };
+
+  database.then((dbase) => {
+    dbase
       .collection("userdata")
-      .insertOne(req.body)
+      .insertOne(datas)
       .then((result) => {
+        console.log("created");
         console.log(result);
-        res.redirect("/");
       });
   });
+  res.redirect("/");
 });
 
 module.exports = router;
