@@ -1,4 +1,13 @@
 <form action="/" method="post">
-   Enter your todo <input type="text" name="todo">
+  Enter your todo <input type="text" name="todo">
   <button type="submit">Submit</button>
 </form>
+
+<h2>ToDo List</h2>
+<table>
+  {{#each result}}
+  <tr>
+    <td>{{this.todo}}</td>
+  </tr>
+  {{/each}}
+</table>

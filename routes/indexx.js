@@ -5,14 +5,22 @@ var database = require("../database");
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.render("index");
+  database.then((dbase) => {
+    dbase
+      .collection("userdata")
+      .find({})
+      .toArray()
+      .then((result) => {
+        console.log(result);
+        res.render("index", { result });
+      });
+  });
 });
 
 router.post("/", (req, res) => {
   var datas = {
-    todo: req.body.todo
+    todo: req.body.todo,
   };
-
   database.then((dbase) => {
     dbase
       .collection("userdata")
