@@ -1,5 +1,6 @@
 var express = require("express");
 var router = express.Router();
+var mongodb = require("mongodb")
 
 var database = require("../database");
 
@@ -32,5 +33,16 @@ router.post("/", (req, res) => {
   });
   res.redirect("/");
 });
+
+router.get("/:id",(req,res)=>{
+  let id=req.params.id;
+  database.then((dbase)=>{
+    dbase.collection("userdata").deleteOne({_id:new mongodb.ObjectId(id)}).then((result)=>{
+      console.log(result);
+      res.redirect("/")
+    })
+  })
+
+})
 
 module.exports = router;
