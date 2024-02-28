@@ -11,7 +11,7 @@ router.get("/", function (req, res, next) {
       .find({})
       .toArray()
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         res.render("index", { result });
       });
   });
