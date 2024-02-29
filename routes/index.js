@@ -5,7 +5,7 @@ var mongodb = require("mongodb")
 var database = require("../database");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
+router.get("/", function (req, res) {
   database.then((dbase) => {
     dbase
       .collection("userdata")
@@ -17,6 +17,16 @@ router.get("/", function (req, res, next) {
       });
   });
 });
+
+router.get("/delete/:id",(req,res)=>{
+  let id=req.params.id;
+  database.then((dbase)=>{
+    dbase.collection("userdata").deleteOne({_id:new mongodb.ObjectId(id)}).then((result)=>{
+      console.log(result);
+    })
+  })
+  res.redirect("/")
+})
 
 router.post("/", (req, res) => {
   var datas = {
@@ -34,15 +44,7 @@ router.post("/", (req, res) => {
   res.redirect("/");
 });
 
-router.get("/:id",(req,res)=>{
-  let id=req.params.id;
-  database.then((dbase)=>{
-    dbase.collection("userdata").deleteOne({_id:new mongodb.ObjectId(id)}).then((result)=>{
-      console.log(result);
-      res.redirect("/")
-    })
-  })
 
-})
+
 
 module.exports = router;
